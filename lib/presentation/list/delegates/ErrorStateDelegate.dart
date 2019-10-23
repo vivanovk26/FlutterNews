@@ -1,0 +1,15 @@
+import 'package:news_app/domain/actions/DomainAction.dart';
+import 'package:news_app/domain/actions/ErrorAction.dart';
+import 'package:news_app/domain/actions/LoadedAction.dart';
+import 'package:news_app/domain/dto/ErrorData.dart';
+
+class ErrorStateDelegate {
+  ErrorData reduce(DomainAction action) {
+    if (action is LoadedAction) {
+      return ErrorData.hide();
+    } else if (action is ErrorAction) {
+      return ErrorData.show(action.exception);
+    }
+    return null;
+  }
+}

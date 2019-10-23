@@ -1,0 +1,6 @@
+{
+  "app_name": "News",
+  "empty_state_title": "No news yet",
+  "empty_state_description": "Please repeat later",
+  "error_state_title": "Try again by pull to refresh"
+}
