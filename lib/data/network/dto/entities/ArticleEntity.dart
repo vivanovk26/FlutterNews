@@ -13,10 +13,8 @@ class ArticleEntity {
   String description;
   @JsonKey(nullable: true, defaultValue: "")
   String urlToImage;
-  @JsonKey(nullable: true, defaultValue: "")
-  String publishedAt;
 
-  ArticleEntity(this.title, this.description, this.urlToImage, this.publishedAt);
+  ArticleEntity(this.title, this.description, this.urlToImage);
 
   factory ArticleEntity.fromJson(Map<String, dynamic> json) => _$ArticleEntityFromJson(json);
 }

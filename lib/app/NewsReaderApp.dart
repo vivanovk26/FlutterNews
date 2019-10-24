@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:news_app/presentation/detail/ArticleDetailScreen.dart';
 import 'package:news_app/presentation/list/ArticlesListScreen.dart';
 
 import 'AppLocalizations.dart';
@@ -29,6 +30,7 @@ class NewsReaderApp extends StatelessWidget {
         // from the list (English, in this case).
         return supportedLocales.first;
       },
+      routes: {ArticleDetailScreen.ARTICLE_ROUTE: (context) => ArticleDetailScreen()},
       title: 'News reader',
       home: ArticlesListScreen(),
     );

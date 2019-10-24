@@ -9,7 +9,8 @@ part of 'ArticlesResponse.dart';
 ArticlesResponse _$ArticlesResponseFromJson(Map<String, dynamic> json) {
   $checkKeys(json, requiredKeys: const ['articles']);
   return ArticlesResponse((json['articles'] as List)
-      ?.map((e) => e == null ? null : ArticleEntity.fromJson(e as Map<String, dynamic>))
+      ?.map((e) =>
+  e == null ? null : ArticleEntity.fromJson(e as Map<String, dynamic>))
       ?.toList());
 }
 
