@@ -14,10 +14,12 @@ class ArticlesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: _articlesData.items.length,
-        itemBuilder: (BuildContext context, int position) =>
-            GestureDetector(
-                child: ArticlesListItemWidget(_articlesData.items[position]),
-                onTap: () => Navigator.push(context, AppRouter().articleDetailRoute(_articlesData.items[position]))));
+      itemCount: _articlesData.items.length,
+      itemBuilder: (BuildContext context, int position) =>
+          GestureDetector(
+            child: ArticlesListItemWidget(_articlesData.items[position]),
+            onTap: () => Navigator.push(context, AppRouter().articleDetailRoute(_articlesData.items[position])),
+          ),
+    );
   }
 }

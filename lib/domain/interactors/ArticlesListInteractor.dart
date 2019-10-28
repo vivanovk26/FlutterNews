@@ -18,14 +18,13 @@ class ArticlesListInteractor {
   }
 
   Stream<DomainAction> _loadArticles(LoadingType loadingType, {String searchText}) async* {
+    yield LoadingAction.show();
     try {
-      yield LoadingAction.show();
       yield LoadedAction(await _articlesRepository.getArticles());
     } catch (error) {
       yield ErrorAction(error);
-    } finally {
-      yield LoadingAction.hide();
     }
+    yield LoadingAction.hide();
   }
 
   Stream<DomainAction> refresh() {

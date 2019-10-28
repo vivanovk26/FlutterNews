@@ -29,6 +29,7 @@ class ArticlesListState extends State<ArticlesListScreen> {
   final ListStateDelegate<Article> _listStateDelegate = ListStateDelegate();
   EmptyStateDelegate _emptyStateDelegate;
   final ErrorStateDelegate _errorStateDelegate = ErrorStateDelegate();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
 
   // Domain
   final ArticlesListInteractor _articlesListInteractor =
@@ -70,17 +71,20 @@ class ArticlesListState extends State<ArticlesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context).getString("app_name")),
-        ),
-        body: RefreshIndicator(
-            child: Stack(children: [
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).getString("app_name")),
+      ),
+      body: RefreshIndicator(
+          child: Stack(
+            children: [
               if (_loading) Center(child: widget.buildLoading()),
               if (_emptyData.visible) Center(child: widget.buildEmptyWidget(_emptyData)),
               if (_errorData.visible) Center(child: widget.buildErrorWidget(_errorData)),
               if (_listData.visible) widget.buildArticles(_listData)
-            ]),
-            onRefresh: _onRefreshCallback));
+            ],
+          ),
+          onRefresh: _onRefreshCallback),
+    );
   }
 
   Future<void> _onRefreshCallback() async {

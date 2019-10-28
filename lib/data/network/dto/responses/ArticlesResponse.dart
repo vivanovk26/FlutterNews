@@ -6,7 +6,7 @@ part "ArticlesResponse.g.dart";
 @JsonSerializable()
 class ArticlesResponse {
   @JsonKey(required: true)
-  List<ArticleEntity> articles;
+  final List<ArticleEntity> articles;
 
   ArticlesResponse(this.articles);
 

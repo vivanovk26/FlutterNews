@@ -8,11 +8,11 @@ part "ArticleEntity.g.dart";
 @JsonSerializable()
 class ArticleEntity {
   @JsonKey(nullable: true, defaultValue: "")
-  String title;
+  final String title;
   @JsonKey(nullable: true, defaultValue: "")
-  String description;
+  final String description;
   @JsonKey(nullable: true, defaultValue: "")
-  String urlToImage;
+  final String urlToImage;
 
   ArticleEntity(this.title, this.description, this.urlToImage);
 
