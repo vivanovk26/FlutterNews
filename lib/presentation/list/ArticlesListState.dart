@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:news_app/app/AppLocalizations.dart';
-import 'package:news_app/data/mappers/ApiEntityMapper.dart';
-import 'package:news_app/data/network/services/ApiService.dart';
-import 'package:news_app/data/repository/ArticlesRepository.dart';
+import 'package:news_app/di/NewsAppModule.dart';
 import 'package:news_app/domain/actions/DomainAction.dart';
 import 'package:news_app/domain/dto/Article.dart';
 import 'package:news_app/domain/dto/EmptyData.dart';
@@ -31,8 +29,7 @@ class ArticlesListState extends State<ArticlesListScreen> {
   final ErrorStateDelegate _errorStateDelegate = ErrorStateDelegate();
 
   // Domain
-  final ArticlesListInteractor _articlesListInteractor =
-      ArticlesListInteractor(ArticlesRepository(ApiService(ApiEntityMapper())));
+  final ArticlesListInteractor _articlesListInteractor = NewsAppModule().getArticlesListInteractor();
   final StreamController<DomainAction> _streamController = StreamController();
 
   @override
