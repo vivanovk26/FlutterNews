@@ -1,11 +1,14 @@
+import 'package:news_app/domain/dto/LoadingType.dart';
+
 import 'DomainAction.dart';
 
 class LoadingAction extends DomainAction {
   bool loading;
+  LoadingType loadingType;
 
-  LoadingAction._internal(this.loading);
+  LoadingAction._internal(this.loading, this.loadingType);
 
-  LoadingAction.show() : this._internal(true);
+  LoadingAction.show(LoadingType loadingType) : this._internal(true, loadingType);
 
-  LoadingAction.hide() : this._internal(false);
+  LoadingAction.hide(LoadingType loadingType) : this._internal(false, loadingType);
 }

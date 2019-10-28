@@ -2,5 +2,7 @@
   "app_name": "Новости",
   "empty_state_title": "Новостей нет",
   "empty_state_description": "Пожалуйста, попробуйте позже",
-  "error_state_title": "Потяните для обновления"
+  "empty_state_retry": "Повторить",
+  "error_state_title": "Попробуйте снова",
+  "error_state_retry": "Повторить"
 }

@@ -12,11 +12,16 @@ class ArticlesListScreen extends StatefulWidget {
   @override
   ArticlesListState createState() => ArticlesListState();
 
-  Widget buildLoading() => CircularProgressIndicator();
+  Widget buildLoading() =>
+      Center(
+        child: CircularProgressIndicator(),
+      );
 
-  Widget buildArticles(ListData<Article> articles) => ArticlesListWidget(articles);
+  Widget buildArticles(ListData<Article> articles, Future<void> Function() onRefresh) =>
+      ArticlesListWidget(articles, onRefresh);
 
-  Widget buildEmptyWidget(EmptyData emptyData) => EmptyWidget(emptyData);
+  Widget buildEmptyWidget(EmptyData emptyData, Future<void> Function() onReload) => EmptyWidget(emptyData, onReload);
 
-  Widget buildErrorWidget(ErrorData errorData) => ErrorDataWidget(errorData);
+  Widget buildErrorWidget(ErrorData errorData, Future<void> Function() onReload) =>
+      ErrorDataWidget(errorData, onReload);
 }

@@ -40,6 +40,7 @@ class ArticleDetailScreen extends StatelessWidget {
                   child: Hero(
                     tag: article.urlToImage,
                     child: CachedNetworkImage(
+                      height: _IMAGE_HEIGHT,
                       imageUrl: article.urlToImage,
                       fit: BoxFit.cover,
                       placeholder: (context, url) =>
@@ -60,7 +61,13 @@ class ArticleDetailScreen extends StatelessWidget {
             children: <Widget>[
               Hero(
                   tag: article.title,
-                  child: Material(color: Colors.transparent, child: Text(article.title, style: _titleStyle))),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      article.title,
+                      style: _titleStyle,
+                    ),
+                  )),
               Hero(
                 tag: article.description,
                 child: Material(

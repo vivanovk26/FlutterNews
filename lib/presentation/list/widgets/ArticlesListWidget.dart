@@ -8,18 +8,22 @@ import 'ArticlesListItemWidget.dart';
 
 class ArticlesListWidget extends StatelessWidget {
   final ListData<Article> _articlesData;
+  final Future<void> Function() _onRefresh;
 
-  ArticlesListWidget(this._articlesData);
+  ArticlesListWidget(this._articlesData, this._onRefresh);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _articlesData.items.length,
-      itemBuilder: (BuildContext context, int position) =>
-          GestureDetector(
-            child: ArticlesListItemWidget(_articlesData.items[position]),
-            onTap: () => Navigator.push(context, AppRouter().articleDetailRoute(_articlesData.items[position])),
-          ),
+    return RefreshIndicator(
+      child: ListView.builder(
+        itemCount: _articlesData.items.length,
+        itemBuilder: (BuildContext context, int position) =>
+            GestureDetector(
+              child: ArticlesListItemWidget(_articlesData.items[position]),
+              onTap: () => Navigator.push(context, AppRouter().articleDetailRoute(_articlesData.items[position])),
+            ),
+      ),
+      onRefresh: _onRefresh,
     );
   }
 }

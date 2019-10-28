@@ -6,8 +6,8 @@ class ArticlesListItemWidget extends StatelessWidget {
 
   // UI
   static const double _ARTICLE_ITEM_CORNER_SIZE = 4.0;
+  static const double _ARTICLE_ITEM_ELEVATION_SIZE = 4.0;
   static const double _ARTICLE_ITEM_IMAGE_HEIGHT = 256.0;
-  static const double _ARTICLE_ITEM_HEIGHT = 256.0;
   static const double _ARTICLE_ITEM_MARGIN = 16.0;
   static const double _ARTICLE_ITEM_MARGIN_HALF = 8.0;
   static const double _ARTICLE_ITEM_PADDING = 16.0;
@@ -16,7 +16,7 @@ class ArticlesListItemWidget extends StatelessWidget {
   static const double _TITLE_FONT_SIZE = 18.0;
   static const int _TITLE_MAX_LINES = 2;
   static const double _DESCRIPTION_FONT_SIZE = 14.0;
-  static const int _DESCRIPTION_MAX_LINES = 2;
+  static const int _DESCRIPTION_MAX_LINES = 3;
 
   final TextStyle _titleStyle = const TextStyle(
     color: Colors.black,
@@ -36,7 +36,7 @@ class ArticlesListItemWidget extends StatelessWidget {
     return Card(
       key: ObjectKey(_article), // As I suppose we don't need it in StatelessWidget. But it's kind a good practise.
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: 4,
+      elevation: _ARTICLE_ITEM_ELEVATION_SIZE,
       margin: EdgeInsets.symmetric(vertical: _ARTICLE_ITEM_MARGIN_HALF, horizontal: _ARTICLE_ITEM_MARGIN),
       semanticContainer: true,
       shape: RoundedRectangleBorder(

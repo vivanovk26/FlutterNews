@@ -29,7 +29,6 @@ class ArticlesListState extends State<ArticlesListScreen> {
   final ListStateDelegate<Article> _listStateDelegate = ListStateDelegate();
   EmptyStateDelegate _emptyStateDelegate;
   final ErrorStateDelegate _errorStateDelegate = ErrorStateDelegate();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
 
   // Domain
   final ArticlesListInteractor _articlesListInteractor =
@@ -41,7 +40,11 @@ class ArticlesListState extends State<ArticlesListScreen> {
     super.initState();
 
     _emptyStateDelegate = EmptyStateDelegate(context);
-    _render(_articlesListInteractor.loadInitial());
+    _loadInitial();
+  }
+
+  Future<void> _loadInitial() async {
+    return _render(_articlesListInteractor.loadInitial());
   }
 
   void _render(Stream<DomainAction> actions) async {
@@ -70,24 +73,21 @@ class ArticlesListState extends State<ArticlesListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AppBar appBar = AppBar(title: Text(AppLocalizations.of(context).getString("app_name")));
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).getString("app_name")),
+      appBar: appBar,
+      body: Stack(
+        children: [
+          if (_loading) widget.buildLoading(),
+          if (_emptyData.visible) widget.buildEmptyWidget(_emptyData, _loadInitial),
+          if (_errorData.visible) widget.buildErrorWidget(_errorData, _loadInitial),
+          if (_listData.visible) widget.buildArticles(_listData, _onRefresh)
+        ],
       ),
-      body: RefreshIndicator(
-          child: Stack(
-            children: [
-              if (_loading) Center(child: widget.buildLoading()),
-              if (_emptyData.visible) Center(child: widget.buildEmptyWidget(_emptyData)),
-              if (_errorData.visible) Center(child: widget.buildErrorWidget(_errorData)),
-              if (_listData.visible) widget.buildArticles(_listData)
-            ],
-          ),
-          onRefresh: _onRefreshCallback),
     );
   }
 
-  Future<void> _onRefreshCallback() async {
+  Future<void> _onRefresh() async {
     return _render(_articlesListInteractor.refresh());
   }
 
