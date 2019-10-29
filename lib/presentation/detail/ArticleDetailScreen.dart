@@ -61,6 +61,7 @@ class ArticleDetailScreen extends StatelessWidget {
             children: <Widget>[
               Hero(
                   tag: article.title,
+                  // For clear share transition.
                   child: Material(
                     color: Colors.transparent,
                     child: Text(
@@ -70,6 +71,7 @@ class ArticleDetailScreen extends StatelessWidget {
                   )),
               Hero(
                 tag: article.description,
+                // For clear share transition.
                 child: Material(
                   color: Colors.transparent,
                   child: Text(

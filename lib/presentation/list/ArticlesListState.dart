@@ -41,10 +41,10 @@ class ArticlesListState extends State<ArticlesListScreen> {
   }
 
   Future<void> _loadInitial() async {
-    return _render(_articlesListInteractor.loadInitial());
+    return _reduce(_articlesListInteractor.loadInitial());
   }
 
-  void _render(Stream<DomainAction> actions) async {
+  void _reduce(Stream<DomainAction> actions) async {
     await for (DomainAction action in actions) {
       final loading = _loadingStateDelegate.reduce(action);
       final listData = _listStateDelegate.reduce(action);
@@ -70,7 +70,10 @@ class ArticlesListState extends State<ArticlesListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AppBar appBar = AppBar(title: Text(AppLocalizations.of(context).getString("app_name")));
+    final AppBar appBar = AppBar(
+        title: Text(
+          AppLocalizations.of(context).getString("app_name"),
+        ));
     return Scaffold(
       appBar: appBar,
       body: Stack(
@@ -85,7 +88,7 @@ class ArticlesListState extends State<ArticlesListScreen> {
   }
 
   Future<void> _onRefresh() async {
-    return _render(_articlesListInteractor.refresh());
+    return _reduce(_articlesListInteractor.refresh());
   }
 
   @override

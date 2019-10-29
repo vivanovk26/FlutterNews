@@ -6,6 +6,10 @@ import 'package:news_app/domain/actions/LoadedAction.dart';
 import 'package:news_app/domain/actions/LoadingAction.dart';
 import 'package:news_app/domain/dto/EmptyData.dart';
 
+/**
+ * Returns EmptyData for handled actions, null otherwise.
+ * Helps to react on Actions and change EmptyData.
+ */
 class EmptyStateDelegate {
   final BuildContext _context;
 

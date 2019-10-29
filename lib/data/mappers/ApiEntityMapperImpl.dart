@@ -29,7 +29,6 @@ class ApiEntityMapperImpl implements ApiEntityMapper {
     if (_validArticle(articleEntity)) {
       return Article(_parseOptionalString(articleEntity.title), _parseOptionalString(articleEntity.description),
           _parseRequiredString(articleEntity.urlToImage));
-      // parseOptionalDynamic(articleEntity.publishedAt, articleEntity.publishedAt != null, 0));
     } else {
       throw ParseException("Error while parsing $articleEntity");
     }

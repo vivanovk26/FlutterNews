@@ -3,6 +3,10 @@ import 'package:news_app/domain/actions/ErrorAction.dart';
 import 'package:news_app/domain/actions/LoadedAction.dart';
 import 'package:news_app/domain/dto/ListData.dart';
 
+/**
+ * Returns EmptyData for handled actions, null otherwise.
+ * Helps to react on Actions and change ListData.
+ */
 class ListStateDelegate<T> {
   ListData<T> reduce(DomainAction action) {
     if (action is LoadedAction) {

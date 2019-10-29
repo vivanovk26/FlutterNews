@@ -1,1 +1,1 @@
-enum LoadingType { None, FirstPage, Refresh }
+enum LoadingType { FirstPage, Refresh }
