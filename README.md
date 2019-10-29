@@ -4,7 +4,7 @@
  Glance implementation of news reader. App is able to receive news, update news list via pull to refresh and handle error and empty states.
  Used architecture approaches:
  - Clean architecture. Data, domain, presentation layers.
- - As a glue between domain and presentation layer unidirectional (some kind of MVI) uses. Instead of callbacks domain layer sends action objects to presentation layer. State (presentation layer) changes by some action from interactors (domain layer) by reducing incoming action data. Every widget has his own delegate that signals what exactly action will change widget internal state.
+ - As a glue between domain and presentation layer unidirectional (some kind of MVI) is used. Instead of callbacks domain layer sends action objects to presentation layer. State (presentation layer) changes by some action from interactors (domain layer) by reducing incoming action data. Every widget has it's own delegate that signals what action changes widget internal state.
  
  Tech stack:
 * [Dart][dart]
@@ -15,7 +15,7 @@
 * [Equtable][equatable] - == and hashCode generator.
 * [Http][http] - http client.
 * [Json annotation][json_annotation] - annotations for data serialization.
-* [Json_serializable][json_serializable] - json handling.
+* [Json_serializable][json_serializable] - json parsing and handling.
 
 [newsapi]: https://newsapi.org
 [dart]: https://dart.dev
