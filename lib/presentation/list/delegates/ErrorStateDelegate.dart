@@ -3,6 +3,7 @@ import 'package:news_app/domain/actions/ErrorAction.dart';
 import 'package:news_app/domain/actions/LoadedAction.dart';
 import 'package:news_app/domain/actions/LoadingAction.dart';
 import 'package:news_app/domain/dto/ErrorData.dart';
+import 'package:news_app/domain/dto/LoadingType.dart';
 
 /**
  * Returns EmptyData for handled actions, null otherwise.
@@ -15,7 +16,11 @@ class ErrorStateDelegate {
     } else if (action is LoadedAction) {
       return ErrorData.hide();
     } else if (action is ErrorAction) {
-      return ErrorData.show(action.exception);
+      if (action.loadingType == LoadingType.FirstPage) {
+        return ErrorData.show(action.loadingType, action.exception);
+      } else {
+        return ErrorData.hide(loadingType: action.loadingType, exception: action.exception);
+      }
     }
     return null;
   }

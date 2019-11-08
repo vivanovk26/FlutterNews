@@ -2,6 +2,7 @@ import 'package:news_app/domain/actions/DomainAction.dart';
 import 'package:news_app/domain/actions/ErrorAction.dart';
 import 'package:news_app/domain/actions/LoadedAction.dart';
 import 'package:news_app/domain/dto/ListData.dart';
+import 'package:news_app/domain/dto/LoadingType.dart';
 
 /**
  * Returns EmptyData for handled actions, null otherwise.
@@ -16,7 +17,9 @@ class ListStateDelegate<T> {
         return ListData.show(action.items);
       }
     } else if (action is ErrorAction) {
-      return ListData.hide();
+      if (action.loadingType == LoadingType.FirstPage) {
+        return ListData.hide();
+      }
     }
     return null;
   }

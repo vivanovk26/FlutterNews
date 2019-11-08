@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:news_app/domain/dto/Article.dart';
 
 class ArticlesListItemWidget extends StatelessWidget {
-
   // UI
   static const double _ARTICLE_ITEM_CORNER_SIZE = 4.0;
   static const double _ARTICLE_ITEM_ELEVATION_SIZE = 4.0;
@@ -34,7 +33,8 @@ class ArticlesListItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      key: ObjectKey(_article), // As I suppose we don't need it in StatelessWidget. But it's kind a good practise.
+      // As I suppose we don't need it in StatelessWidget. But it's kind a good practise.
+      key: ObjectKey(_article),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: _ARTICLE_ITEM_ELEVATION_SIZE,
       margin: EdgeInsets.symmetric(vertical: _ARTICLE_ITEM_MARGIN_HALF, horizontal: _ARTICLE_ITEM_MARGIN),
@@ -47,15 +47,19 @@ class ArticlesListItemWidget extends StatelessWidget {
           Hero(
             tag: _article.urlToImage,
             child: CachedNetworkImage(
-              fit: BoxFit.cover,
-              height: _ARTICLE_ITEM_IMAGE_HEIGHT,
-              imageUrl: _article.urlToImage,
-              placeholder: (context, url) =>
-                  Container(
-                    decoration: BoxDecoration(color: Colors.grey),
-                  ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
+                fit: BoxFit.cover,
+                height: _ARTICLE_ITEM_IMAGE_HEIGHT,
+                imageUrl: _article.urlToImage,
+                placeholder: (context, url) =>
+                    Container(
+                      height: _ARTICLE_ITEM_IMAGE_HEIGHT,
+                      decoration: BoxDecoration(color: Colors.grey),
+                    ),
+                errorWidget: (context, url, error) =>
+                    Container(
+                      height: _ARTICLE_ITEM_IMAGE_HEIGHT,
+                      child: Icon(Icons.error),
+                    )),
           ),
           Padding(
             padding: EdgeInsets.all(_ARTICLE_ITEM_PADDING),

@@ -8,6 +8,7 @@ import 'package:news_app/domain/dto/LoadingType.dart';
  */
 class LoadingStateDelegate {
   bool reduce(DomainAction action) {
+    // Ignore any LoadingTypes except LoadingType.FirstPage.
     if (action is LoadingAction && action.loadingType == LoadingType.FirstPage) {
       return action.loading;
     }

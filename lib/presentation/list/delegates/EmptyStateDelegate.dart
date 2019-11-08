@@ -11,17 +11,13 @@ import 'package:news_app/domain/dto/EmptyData.dart';
  * Helps to react on Actions and change EmptyData.
  */
 class EmptyStateDelegate {
-  final BuildContext _context;
-
-  EmptyStateDelegate(this._context);
-
-  EmptyData reduce(DomainAction action) {
+  EmptyData reduce(BuildContext context, DomainAction action) {
     if (action is LoadingAction && action.loading) {
       return EmptyData.hide();
     } else if (action is LoadedAction) {
       if (action.items.isEmpty) {
-        return EmptyData.show(AppLocalizations.of(_context).getString("empty_state_title"),
-            AppLocalizations.of(_context).getString("empty_state_description"));
+        return EmptyData.show(AppLocalizations.of(context).getString("empty_state_title"),
+            AppLocalizations.of(context).getString("empty_state_description"));
       } else {
         return EmptyData.hide();
       }

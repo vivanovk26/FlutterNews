@@ -20,7 +20,7 @@ class ArticlesListInteractorImpl implements ArticlesListInteractor {
     try {
       yield LoadedAction(await _articlesRepository.getArticles());
     } catch (error) {
-      yield ErrorAction(error);
+      yield ErrorAction(loadingType, error);
     }
     yield LoadingAction.hide(loadingType);
   }

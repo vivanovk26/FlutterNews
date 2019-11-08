@@ -4,5 +4,6 @@
   "empty_state_description": "Please retry later",
   "empty_state_retry": "Retry",
   "error_state_title": "Please try again",
-  "error_state_retry": "Retry"
+  "error_state_retry": "Retry",
+  "error_update": "Error on update"
 }

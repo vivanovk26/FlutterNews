@@ -14,8 +14,13 @@ import 'package:news_app/presentation/list/delegates/EmptyStateDelegate.dart';
 import 'package:news_app/presentation/list/delegates/ErrorStateDelegate.dart';
 import 'package:news_app/presentation/list/delegates/ListStateDelegate.dart';
 import 'package:news_app/presentation/list/delegates/LoadingStateDelegate.dart';
+import 'package:news_app/presentation/list/delegates/SnackBarDelegate.dart';
 
 class ArticlesListState extends State<ArticlesListScreen> {
+  // Keys
+  // I suppose this is the only way to handle snackbar events outside Scaffold
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   // Fields
   bool _loading = true;
   ListData _listData = ListData.hide();
@@ -25,8 +30,10 @@ class ArticlesListState extends State<ArticlesListScreen> {
   // Delegates
   final LoadingStateDelegate _loadingStateDelegate = LoadingStateDelegate();
   final ListStateDelegate<Article> _listStateDelegate = ListStateDelegate();
-  EmptyStateDelegate _emptyStateDelegate;
+  final EmptyStateDelegate _emptyStateDelegate = EmptyStateDelegate();
   final ErrorStateDelegate _errorStateDelegate = ErrorStateDelegate();
+
+  final SnackBarDelegate _snackBarDelegate = SnackBarDelegate();
 
   // Domain
   final ArticlesListInteractor _articlesListInteractor = NewsAppModule().getArticlesListInteractor();
@@ -36,7 +43,6 @@ class ArticlesListState extends State<ArticlesListScreen> {
   void initState() {
     super.initState();
 
-    _emptyStateDelegate = EmptyStateDelegate(context);
     _loadInitial();
   }
 
@@ -46,9 +52,11 @@ class ArticlesListState extends State<ArticlesListScreen> {
 
   void _reduce(Stream<DomainAction> actions) async {
     await for (DomainAction action in actions) {
+      _snackBarDelegate.reduce(context, _scaffoldKey, action);
+
       final loading = _loadingStateDelegate.reduce(action);
       final listData = _listStateDelegate.reduce(action);
-      final emptyData = _emptyStateDelegate.reduce(action);
+      final emptyData = _emptyStateDelegate.reduce(context, action);
       final errorData = _errorStateDelegate.reduce(action);
       setState(() {
         if (loading != null) {
@@ -75,6 +83,7 @@ class ArticlesListState extends State<ArticlesListScreen> {
           AppLocalizations.of(context).getString("app_name"),
         ));
     return Scaffold(
+      key: _scaffoldKey,
       appBar: appBar,
       body: Stack(
         children: [
