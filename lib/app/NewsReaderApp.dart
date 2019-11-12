@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:news_app/presentation/detail/ArticleDetailScreen.dart';
-import 'package:news_app/presentation/list/ArticlesListScreen.dart';
+import 'package:news_app/presentation/main/MainScreen.dart';
 
 import 'AppLocalizations.dart';
 
@@ -19,7 +19,7 @@ class NewsReaderApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       localeResolutionCallback: (locale, supportedLocales) {
-        // Check if the current device locale is supported
+        // Check if the current device locale is supported.
         for (var supportedLocale in supportedLocales) {
           if (supportedLocale.languageCode == locale.languageCode &&
               supportedLocale.countryCode == locale.countryCode) {
@@ -32,7 +32,7 @@ class NewsReaderApp extends StatelessWidget {
       },
       routes: {ArticleDetailScreen.ARTICLE_ROUTE: (context) => ArticleDetailScreen()},
       title: 'News reader',
-      home: ArticlesListScreen(),
+      home: MainScreen(),
     );
   }
 }

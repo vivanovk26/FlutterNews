@@ -6,20 +6,22 @@ class ArticleDetailScreen extends StatelessWidget {
   // Navigation
   static const String ARTICLE_ROUTE = "ARTICLE_ROUTE";
 
-  // UI
+  // UI sizes
   static const double _IMAGE_HEIGHT = 256.0;
   static const double _TEXT_PADDING = 16.0;
 
-  // Text
+  // Text sizes
   static const double _DESCRIPTION_FONT_SIZE = 14.0;
   static const double _TITLE_FONT_SIZE = 18.0;
 
-  final TextStyle _titleStyle = const TextStyle(
-    color: Colors.black,
+  // Styles
+  static const Color _TEXT_COLOR = Colors.black;
+  static const TextStyle _TITLE_STYLE = TextStyle(
+    color: _TEXT_COLOR,
     fontSize: _TITLE_FONT_SIZE,
   );
-  final TextStyle _descriptionStyle = const TextStyle(
-    color: Colors.black,
+  static const TextStyle _DESCRIPTION_STYLE = const TextStyle(
+    color: _TEXT_COLOR,
     fontSize: _DESCRIPTION_FONT_SIZE,
   );
 
@@ -66,7 +68,7 @@ class ArticleDetailScreen extends StatelessWidget {
                     color: Colors.transparent,
                     child: Text(
                       article.title,
-                      style: _titleStyle,
+                      style: _TITLE_STYLE,
                     ),
                   )),
               Hero(
@@ -76,7 +78,7 @@ class ArticleDetailScreen extends StatelessWidget {
                   color: Colors.transparent,
                   child: Text(
                     article.description,
-                    style: _descriptionStyle,
+                    style: _DESCRIPTION_STYLE,
                   ),
                 ),
               )

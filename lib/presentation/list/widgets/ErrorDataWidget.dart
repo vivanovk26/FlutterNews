@@ -4,20 +4,23 @@ import 'package:news_app/app/AppLocalizations.dart';
 import 'package:news_app/domain/dto/ErrorData.dart';
 
 class ErrorDataWidget extends StatelessWidget {
+  // Text sizes
   static const double _TITLE_FONT_SIZE = 16.0;
   static const double _SUB_TITLE_FONT_SIZE = 12.0;
   static const double _BUTTON_FONT_SIZE = 14.0;
 
-  final TextStyle _titleStyle = const TextStyle(
-    color: Colors.black,
+  // Styles
+  static const Color _TEXT_COLOR = Colors.black;
+  static const TextStyle _TITLE_STYLE = TextStyle(
+    color: _TEXT_COLOR,
     fontSize: _TITLE_FONT_SIZE,
   );
-  final TextStyle _subTitleStyle = const TextStyle(
-    color: Colors.black,
+  static const TextStyle _SUBTITLE_STYLE = TextStyle(
+    color: _TEXT_COLOR,
     fontSize: _SUB_TITLE_FONT_SIZE,
   );
-  final TextStyle _buttonStyle = const TextStyle(
-    color: Colors.black,
+  static const TextStyle _BUTTON_STYLE = TextStyle(
+    color: _TEXT_COLOR,
     fontSize: _BUTTON_FONT_SIZE,
   );
 
@@ -35,18 +38,18 @@ class ErrorDataWidget extends StatelessWidget {
           Icon(Icons.error),
           Text(
             AppLocalizations.of(context).getString("error_state_title"),
-            style: _titleStyle,
+            style: _TITLE_STYLE,
             textAlign: TextAlign.center,
           ),
           Text(
             _errorData.exception.toString(),
-            style: _subTitleStyle,
+            style: _SUBTITLE_STYLE,
             textAlign: TextAlign.center,
           ),
           RaisedButton(
             child: Text(
               AppLocalizations.of(context).getString("empty_state_retry"),
-              style: _buttonStyle,
+              style: _BUTTON_STYLE,
             ),
             onPressed: _onReload,
           )

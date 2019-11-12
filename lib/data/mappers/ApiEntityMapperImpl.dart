@@ -8,11 +8,11 @@ import 'package:news_app/domain/dto/Article.dart';
 
 class ApiEntityMapperImpl implements ApiEntityMapper {
   @override
-  List<Article> mapArticles(ArticlesResponse articlesResponse) {
+  List<Article> mapEntitiesToArticles(ArticlesResponse articlesResponse) {
     // Nullability check in ArticleResponseEntity.
     List<Article> duplicates = articlesResponse.articles
         .where((articleEntity) => _validArticle(articleEntity))
-        .map((articleEntity) => mapArticle(articleEntity))
+        .map((articleEntity) => mapEntityToArticle(articleEntity))
         .toList();
     // Easiest way to remove duplicated articles.
     return LinkedHashSet.of(duplicates).toList();
@@ -25,10 +25,17 @@ class ApiEntityMapperImpl implements ApiEntityMapper {
         (articleEntity.urlToImage != null && articleEntity.urlToImage.isNotEmpty);
   }
 
-  Article mapArticle(ArticleEntity articleEntity) {
+  Article mapEntityToArticle(ArticleEntity articleEntity) {
     if (_validArticle(articleEntity)) {
-      return Article(_parseOptionalString(articleEntity.title), _parseOptionalString(articleEntity.description),
-          _parseRequiredString(articleEntity.urlToImage));
+      final String title = _parseOptionalString(articleEntity.title);
+      final String description = _parseOptionalString(articleEntity.description);
+      return Article(
+          title + description, // News API doesn't provides ids.
+          title,
+          description,
+          _parseRequiredString(
+            articleEntity.urlToImage,
+          ));
     } else {
       throw ParseException("Error while parsing $articleEntity");
     }

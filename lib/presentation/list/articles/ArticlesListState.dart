@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:news_app/app/AppLocalizations.dart';
 import 'package:news_app/di/NewsAppModule.dart';
 import 'package:news_app/domain/actions/DomainAction.dart';
 import 'package:news_app/domain/dto/Article.dart';
@@ -9,18 +8,13 @@ import 'package:news_app/domain/dto/EmptyData.dart';
 import 'package:news_app/domain/dto/ErrorData.dart';
 import 'package:news_app/domain/dto/ListData.dart';
 import 'package:news_app/domain/interactors/ArticlesListInteractor.dart';
-import 'package:news_app/presentation/list/ArticlesListScreen.dart';
+import 'package:news_app/presentation/list/articles/ArticlesListScreen.dart';
 import 'package:news_app/presentation/list/delegates/EmptyStateDelegate.dart';
 import 'package:news_app/presentation/list/delegates/ErrorStateDelegate.dart';
 import 'package:news_app/presentation/list/delegates/ListStateDelegate.dart';
 import 'package:news_app/presentation/list/delegates/LoadingStateDelegate.dart';
-import 'package:news_app/presentation/list/delegates/SnackBarDelegate.dart';
 
 class ArticlesListState extends State<ArticlesListScreen> {
-  // Keys
-  // I suppose this is the only way to handle snackbar events outside Scaffold
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   // Fields
   bool _loading = true;
   ListData _listData = ListData.hide();
@@ -32,8 +26,6 @@ class ArticlesListState extends State<ArticlesListScreen> {
   final ListStateDelegate<Article> _listStateDelegate = ListStateDelegate();
   final EmptyStateDelegate _emptyStateDelegate = EmptyStateDelegate();
   final ErrorStateDelegate _errorStateDelegate = ErrorStateDelegate();
-
-  final SnackBarDelegate _snackBarDelegate = SnackBarDelegate();
 
   // Domain
   final ArticlesListInteractor _articlesListInteractor = NewsAppModule().getArticlesListInteractor();
@@ -52,8 +44,6 @@ class ArticlesListState extends State<ArticlesListScreen> {
 
   void _reduce(Stream<DomainAction> actions) async {
     await for (DomainAction action in actions) {
-      _snackBarDelegate.reduce(context, _scaffoldKey, action);
-
       final loading = _loadingStateDelegate.reduce(action);
       final listData = _listStateDelegate.reduce(action);
       final emptyData = _emptyStateDelegate.reduce(context, action);
@@ -78,21 +68,13 @@ class ArticlesListState extends State<ArticlesListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AppBar appBar = AppBar(
-        title: Text(
-          AppLocalizations.of(context).getString("app_name"),
-        ));
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: appBar,
-      body: Stack(
-        children: [
-          if (_loading) widget.buildLoading(),
-          if (_emptyData.visible) widget.buildEmptyWidget(_emptyData, _loadInitial),
-          if (_errorData.visible) widget.buildErrorWidget(_errorData, _loadInitial),
-          if (_listData.visible) widget.buildArticles(_listData, _onRefresh)
-        ],
-      ),
+    return Stack(
+      children: [
+        if (_loading) widget.buildLoading(),
+        if (_emptyData.visible) widget.buildEmptyWidget(_emptyData, _loadInitial),
+        if (_errorData.visible) widget.buildErrorWidget(_errorData, _loadInitial),
+        if (_listData.visible) widget.buildArticles(_listData, _onRefresh)
+      ],
     );
   }
 

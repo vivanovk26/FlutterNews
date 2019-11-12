@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/domain/dto/Article.dart';
 
 class ArticlesListItemWidget extends StatelessWidget {
-  // UI
+  // UI sizes
   static const double _ARTICLE_ITEM_CORNER_SIZE = 4.0;
   static const double _ARTICLE_ITEM_ELEVATION_SIZE = 4.0;
   static const double _ARTICLE_ITEM_IMAGE_HEIGHT = 256.0;
@@ -11,18 +11,20 @@ class ArticlesListItemWidget extends StatelessWidget {
   static const double _ARTICLE_ITEM_MARGIN_HALF = 8.0;
   static const double _ARTICLE_ITEM_PADDING = 16.0;
 
-  // Text
+  // Text sizes
   static const double _TITLE_FONT_SIZE = 18.0;
   static const int _TITLE_MAX_LINES = 2;
   static const double _DESCRIPTION_FONT_SIZE = 14.0;
   static const int _DESCRIPTION_MAX_LINES = 3;
 
-  final TextStyle _titleStyle = const TextStyle(
-    color: Colors.black,
+  // Styles
+  static const Color _TEXT_COLOR = Colors.black;
+  static const TextStyle _TITLE_STYLE = TextStyle(
+    color: _TEXT_COLOR,
     fontSize: _TITLE_FONT_SIZE,
   );
-  final TextStyle _descriptionStyle = const TextStyle(
-    color: Colors.black,
+  static const TextStyle _DESCRIPTION_STYLE = TextStyle(
+    color: _TEXT_COLOR,
     fontSize: _DESCRIPTION_FONT_SIZE,
   );
 
@@ -71,7 +73,7 @@ class ArticlesListItemWidget extends StatelessWidget {
                         color: Colors.transparent,
                         child: Text(
                           _article.title,
-                          style: _titleStyle,
+                          style: _TITLE_STYLE,
                           maxLines: _TITLE_MAX_LINES,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.end,
@@ -82,7 +84,7 @@ class ArticlesListItemWidget extends StatelessWidget {
                     color: Colors.transparent,
                     child: Text(
                       _article.description,
-                      style: _descriptionStyle,
+                      style: _DESCRIPTION_STYLE,
                       maxLines: _DESCRIPTION_MAX_LINES,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.end,

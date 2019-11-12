@@ -5,5 +5,7 @@
   "empty_state_retry": "Повторить",
   "error_state_title": "Попробуйте снова",
   "error_state_retry": "Повторить",
-  "error_update": "Ошибка при обновлении"
+  "error_update": "Ошибка при обновлении",
+  "main_articles": "Новости",
+  "main_bookmarks": "Закладки"
 }

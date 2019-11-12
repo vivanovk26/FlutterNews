@@ -19,7 +19,7 @@ class ApiServiceImpl implements ApiService {
     final response = await http.get("https://newsapi.org/v2/top-headlines?language=$_LANGUAGE&apiKey=$_API_KEY");
     if (response.statusCode == _OK_CODE) {
       final articlesResponse = ArticlesResponse.fromJson(json.decode(response.body));
-      return _apiEntityMapper.mapArticles(articlesResponse);
+      return _apiEntityMapper.mapEntitiesToArticles(articlesResponse);
     } else {
       throw Exception("Error while loading articles");
     }

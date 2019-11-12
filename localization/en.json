@@ -5,5 +5,7 @@
   "empty_state_retry": "Retry",
   "error_state_title": "Please try again",
   "error_state_retry": "Retry",
-  "error_update": "Error on update"
+  "error_update": "Error on update",
+  "main_articles": "Articles",
+  "main_bookmarks": "Bookmarks"
 }
