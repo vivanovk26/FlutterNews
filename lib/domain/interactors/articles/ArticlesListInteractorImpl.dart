@@ -3,14 +3,17 @@ import 'package:news_app/domain/actions/DomainAction.dart';
 import 'package:news_app/domain/actions/ErrorAction.dart';
 import 'package:news_app/domain/actions/LoadedAction.dart';
 import 'package:news_app/domain/actions/LoadingAction.dart';
+import 'package:news_app/domain/actions/UpdateBookmarkAction.dart';
+import 'package:news_app/domain/dto/Article.dart';
 import 'package:news_app/domain/dto/LoadingType.dart';
-import 'package:news_app/domain/interactors/ArticlesListInteractor.dart';
+import 'package:news_app/domain/interactors/articles/ArticlesListInteractor.dart';
 
 class ArticlesListInteractorImpl implements ArticlesListInteractor {
   ArticlesRepository _articlesRepository;
 
   ArticlesListInteractorImpl(this._articlesRepository);
 
+  @override
   Stream<DomainAction> loadInitial() {
     return _loadArticles(LoadingType.FirstPage);
   }
@@ -25,6 +28,20 @@ class ArticlesListInteractorImpl implements ArticlesListInteractor {
     yield LoadingAction.hide(loadingType);
   }
 
+  @override
+  Stream<DomainAction> changeItemBookmarkState(Article article) async* {
+    yield LoadingAction.show(LoadingType.FirstPage);
+    try {
+      bool inDatabase = await _articlesRepository.changeItemBookmarkState(article);
+      _articlesRepository.updateBookmarkIdInCache(article.id);
+      yield UpdateBookmarkAction(article.id, inDatabase);
+    } catch (error) {
+      yield ErrorAction(LoadingType.FirstPage, error);
+    }
+    yield LoadingAction.hide(LoadingType.FirstPage);
+  }
+
+  @override
   Stream<DomainAction> refresh() {
     return _loadArticles(LoadingType.Refresh);
   }

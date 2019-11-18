@@ -3,11 +3,11 @@ import 'package:news_app/domain/dto/LoadingType.dart';
 class ErrorData {
   bool visible;
   LoadingType loadingType;
-  Exception exception;
+  Error error;
 
-  ErrorData._internal(this.visible, this.loadingType, this.exception);
+  ErrorData._internal(this.visible, this.loadingType, this.error);
 
-  ErrorData.show(LoadingType loadingType, Exception exception) : this._internal(true, loadingType, exception);
+  ErrorData.show(LoadingType loadingType, Error error) : this._internal(true, loadingType, error);
 
-  ErrorData.hide({LoadingType loadingType, Exception exception}) : this._internal(false, loadingType, exception);
+  ErrorData.hide({LoadingType loadingType, Error error}) : this._internal(false, loadingType, error);
 }

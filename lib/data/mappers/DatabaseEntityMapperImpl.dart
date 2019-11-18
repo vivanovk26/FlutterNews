@@ -11,6 +11,7 @@ class DatabaseEntityMapperImpl extends DatabaseEntityMapper {
   @override
   Map<String, dynamic> mapArticleToEntity(Article article) {
     return {
+      _ARTICLE_ID: article.id,
       _ARTICLE_TITLE: article.title,
       _ARTICLE_DESCRIPTION: article.description,
       _ARTICLE_URL_TO_IMAGE: article.urlToImage,
@@ -24,6 +25,7 @@ class DatabaseEntityMapperImpl extends DatabaseEntityMapper {
       map[_ARTICLE_TITLE],
       map[_ARTICLE_DESCRIPTION],
       map[_ARTICLE_URL_TO_IMAGE],
+      true,
     );
   }
 }

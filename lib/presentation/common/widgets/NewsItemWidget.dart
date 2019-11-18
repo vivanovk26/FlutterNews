@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/domain/dto/Article.dart';
+import 'package:news_app/presentation/screens/detail/ArticleDetailScreen.dart';
 
-class ArticlesListItemWidget extends StatelessWidget {
+class NewsItemWidget extends StatelessWidget {
   // UI sizes
   static const double _ARTICLE_ITEM_CORNER_SIZE = 4.0;
   static const double _ARTICLE_ITEM_ELEVATION_SIZE = 4.0;
@@ -29,8 +30,9 @@ class ArticlesListItemWidget extends StatelessWidget {
   );
 
   final Article _article;
+  final void Function(Article article) _onBookmarkClick;
 
-  ArticlesListItemWidget(this._article);
+  NewsItemWidget(this._article, this._onBookmarkClick);
 
   @override
   Widget build(BuildContext context) {
@@ -64,38 +66,61 @@ class ArticlesListItemWidget extends StatelessWidget {
                     )),
           ),
           Padding(
-            padding: EdgeInsets.all(_ARTICLE_ITEM_PADDING),
-            child: Column(
-              children: <Widget>[
-                Hero(
-                    tag: _article.title,
-                    child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          _article.title,
-                          style: _TITLE_STYLE,
-                          maxLines: _TITLE_MAX_LINES,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.end,
-                        ))),
-                Hero(
-                  tag: _article.description,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      _article.description,
-                      style: _DESCRIPTION_STYLE,
-                      maxLines: _DESCRIPTION_MAX_LINES,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.end,
+              padding: EdgeInsets.all(_ARTICLE_ITEM_PADDING),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        Hero(
+                            tag: _article.title,
+                            child: Material(
+                                color: Colors.transparent,
+                                child: Text(
+                                  _article.title,
+                                  style: _TITLE_STYLE,
+                                  maxLines: _TITLE_MAX_LINES,
+                                  overflow: TextOverflow.ellipsis,
+                                ))),
+                        Hero(
+                          tag: _article.description,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Text(
+                              _article.description,
+                              style: _DESCRIPTION_STYLE,
+                              maxLines: _DESCRIPTION_MAX_LINES,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                )
-              ],
-            ),
-          )
+                  Hero(
+                    tag: _article.title + ArticleDetailScreen.HERO_BOOKMARK,
+                    child: IconButton(
+                      icon: Icon(
+                        getBookmarkIcon(_article.inDatabase),
+                      ),
+                      onPressed: () {
+                        _onBookmarkClick(_article);
+                      },
+                    ),
+                  ),
+                ],
+              ))
         ],
       ),
     );
+  }
+
+  IconData getBookmarkIcon(bool inDatabase) {
+    if (inDatabase) {
+      return Icons.bookmark;
+    } else {
+      return Icons.bookmark_border;
+    }
   }
 }

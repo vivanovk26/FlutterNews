@@ -5,6 +5,7 @@ import 'package:news_app/domain/dto/Article.dart';
 class ArticleDetailScreen extends StatelessWidget {
   // Navigation
   static const String ARTICLE_ROUTE = "ARTICLE_ROUTE";
+  static const String HERO_BOOKMARK = "HERO_BOOKMARK";
 
   // UI sizes
   static const double _IMAGE_HEIGHT = 256.0;

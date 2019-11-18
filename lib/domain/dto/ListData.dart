@@ -6,5 +6,5 @@ class ListData<T> {
 
   ListData.show(List<T> items) : this._internal(true, items);
 
-  ListData.hide() : this._internal(false, List());
+  ListData.hide() : this._internal(false, List<T>());
 }

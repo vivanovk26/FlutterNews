@@ -4,7 +4,7 @@ import 'DomainAction.dart';
 
 class ErrorAction extends DomainAction {
   LoadingType loadingType;
-  Exception exception;
+  Error error;
 
-  ErrorAction(this.loadingType, this.exception);
+  ErrorAction(this.loadingType, this.error);
 }

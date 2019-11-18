@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/presentation/list/delegates/SnackBarDelegate.dart';
-import 'package:news_app/presentation/main/MainScreen.dart';
+import 'package:news_app/presentation/common/delegates/SnackBarDelegate.dart';
+
+import 'MainScreen.dart';
 
 class MainState extends State<MainScreen> {
   // Keys
@@ -18,7 +19,7 @@ class MainState extends State<MainScreen> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: widget.buildAppBar(context),
-        body: widget.getPage(_selectedPageIndex),
+        body: widget.buildPages(_selectedPageIndex),
         bottomNavigationBar: widget.buildBottomNavigationBar(
           context,
           _selectedPageIndex,

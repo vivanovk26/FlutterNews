@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/app/AppLocalizations.dart';
-import 'package:news_app/presentation/list/articles/ArticlesListScreen.dart';
-import 'package:news_app/presentation/main/MainState.dart';
+import 'package:news_app/presentation/screens/articles/ArticlesListScreen.dart';
+import 'package:news_app/presentation/screens/bookmarks/BookmarksListScreen.dart';
+
+import 'MainState.dart';
 
 class MainScreen extends StatefulWidget {
-  // Indexes
-  static const _ARTICLES_PAGE_INDEX = 0;
-  static const _BOOKMARKS_PAGE_INDEX = 1;
+  // Indexes & keys
+  static const String _ARTICLES_PAGE_KEY = "ARTICLES_PAGE_KEY";
+  static const String _BOOKMARKS_PAGE_KEY = "BOOKMARKS_PAGE_KEY";
 
   // Text
   static const double _NAVIGATION_TITLE_FONT_SIZE = 12.0;
@@ -17,6 +19,13 @@ class MainScreen extends StatefulWidget {
     color: _SELECTED_COLOR,
     fontSize: _NAVIGATION_TITLE_FONT_SIZE,
   );
+
+  // Fields
+  final List<Widget> pages = [
+    ArticlesListScreen(PageStorageKey(_ARTICLES_PAGE_KEY)),
+    BookmarksListScreen(PageStorageKey(_BOOKMARKS_PAGE_KEY)),
+  ];
+  final PageStorageBucket pagesBucket = PageStorageBucket();
 
   @override
   MainState createState() => MainState();
@@ -29,22 +38,12 @@ class MainScreen extends StatefulWidget {
     );
   }
 
-  Widget getPage(int index) {
-    switch (index) {
-      case _ARTICLES_PAGE_INDEX:
-        return _buildArticlesScreen();
-      case _BOOKMARKS_PAGE_INDEX:
-        return _buildBookmarksScreen();
-      default:
-        return _buildArticlesScreen();
-    }
+  Widget buildPages(int index) {
+    return PageStorage(
+      child: pages[index],
+      bucket: pagesBucket,
+    );
   }
-
-  Widget _buildArticlesScreen() => ArticlesListScreen();
-
-  Widget _buildBookmarksScreen() => Center(
-        child: Text("Whooa"),
-      );
 
   Widget buildBottomNavigationBar(BuildContext context, int currentIndex, void Function(int index) onTap) {
     return BottomNavigationBar(

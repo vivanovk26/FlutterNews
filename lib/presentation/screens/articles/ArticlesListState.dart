@@ -7,23 +7,23 @@ import 'package:news_app/domain/dto/Article.dart';
 import 'package:news_app/domain/dto/EmptyData.dart';
 import 'package:news_app/domain/dto/ErrorData.dart';
 import 'package:news_app/domain/dto/ListData.dart';
-import 'package:news_app/domain/interactors/ArticlesListInteractor.dart';
-import 'package:news_app/presentation/list/articles/ArticlesListScreen.dart';
-import 'package:news_app/presentation/list/delegates/EmptyStateDelegate.dart';
-import 'package:news_app/presentation/list/delegates/ErrorStateDelegate.dart';
-import 'package:news_app/presentation/list/delegates/ListStateDelegate.dart';
-import 'package:news_app/presentation/list/delegates/LoadingStateDelegate.dart';
+import 'package:news_app/domain/interactors/articles/ArticlesListInteractor.dart';
+import 'package:news_app/presentation/common/delegates/state/EmptyStateDelegate.dart';
+import 'package:news_app/presentation/common/delegates/state/ErrorStateDelegate.dart';
+import 'package:news_app/presentation/common/delegates/state/LoadingStateDelegate.dart';
+import 'package:news_app/presentation/screens/articles/ArticlesListScreen.dart';
+import 'package:news_app/presentation/screens/articles/ArticlesListStateDelegate.dart';
 
 class ArticlesListState extends State<ArticlesListScreen> {
   // Fields
   bool _loading = true;
-  ListData _listData = ListData.hide();
+  ListData<Article> _listData = ListData.hide();
   EmptyData _emptyData = EmptyData.hide();
   ErrorData _errorData = ErrorData.hide();
 
   // Delegates
   final LoadingStateDelegate _loadingStateDelegate = LoadingStateDelegate();
-  final ListStateDelegate<Article> _listStateDelegate = ListStateDelegate();
+  final ArticlesListStateDelegate _listStateDelegate = ArticlesListStateDelegate();
   final EmptyStateDelegate _emptyStateDelegate = EmptyStateDelegate();
   final ErrorStateDelegate _errorStateDelegate = ErrorStateDelegate();
 
@@ -35,17 +35,15 @@ class ArticlesListState extends State<ArticlesListScreen> {
   void initState() {
     super.initState();
 
-    _loadInitial();
-  }
-
-  Future<void> _loadInitial() async {
-    return _reduce(_articlesListInteractor.loadInitial());
+    if (_listData.items.isEmpty) {
+      _reduce(_articlesListInteractor.loadInitial());
+    }
   }
 
   void _reduce(Stream<DomainAction> actions) async {
     await for (DomainAction action in actions) {
       final loading = _loadingStateDelegate.reduce(action);
-      final listData = _listStateDelegate.reduce(action);
+      final listData = _listStateDelegate.reduceArticles(action, _listData.items);
       final emptyData = _emptyStateDelegate.reduce(context, action);
       final errorData = _errorStateDelegate.reduce(action);
       setState(() {
@@ -71,11 +69,19 @@ class ArticlesListState extends State<ArticlesListScreen> {
     return Stack(
       children: [
         if (_loading) widget.buildLoading(),
+        if (_listData.visible) widget.buildArticles(_listData, _onBookmarkClick, _onRefresh),
         if (_emptyData.visible) widget.buildEmptyWidget(_emptyData, _loadInitial),
-        if (_errorData.visible) widget.buildErrorWidget(_errorData, _loadInitial),
-        if (_listData.visible) widget.buildArticles(_listData, _onRefresh)
+        if (_errorData.visible) widget.buildErrorWidget(_errorData, _loadInitial)
       ],
     );
+  }
+
+  Future<void> _loadInitial() async {
+    return _reduce(_articlesListInteractor.loadInitial());
+  }
+
+  void _onBookmarkClick(Article article) {
+    _reduce(_articlesListInteractor.changeItemBookmarkState(article));
   }
 
   Future<void> _onRefresh() async {

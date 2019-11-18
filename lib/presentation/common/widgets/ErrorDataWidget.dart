@@ -42,7 +42,7 @@ class ErrorDataWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            _errorData.exception.toString(),
+            _errorData.error.toString(),
             style: _SUBTITLE_STYLE,
             textAlign: TextAlign.center,
           ),

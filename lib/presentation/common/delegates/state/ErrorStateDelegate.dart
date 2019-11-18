@@ -17,9 +17,9 @@ class ErrorStateDelegate {
       return ErrorData.hide();
     } else if (action is ErrorAction) {
       if (action.loadingType == LoadingType.FirstPage) {
-        return ErrorData.show(action.loadingType, action.exception);
+        return ErrorData.show(action.loadingType, action.error);
       } else {
-        return ErrorData.hide(loadingType: action.loadingType, exception: action.exception);
+        return ErrorData.hide(loadingType: action.loadingType, error: action.error);
       }
     }
     return null;

@@ -1,9 +1,11 @@
 import 'package:news_app/domain/dto/Article.dart';
 
 abstract class DatabaseService {
-  Future<void> insertArticle(Article article);
+  Future<List<String>> getArticleIds();
 
   Future<List<Article>> getArticles();
 
-  Future<void> deleteArticle(String articleId);
+  Future<int> insertArticle(Article article);
+
+  Future<int> deleteArticle(String articleId);
 }

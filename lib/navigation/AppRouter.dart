@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/domain/dto/Article.dart';
-import 'package:news_app/presentation/detail/ArticleDetailScreen.dart';
+import 'package:news_app/presentation/screens/detail/ArticleDetailScreen.dart';
 
 class AppRouter {
   Route articleDetailRoute(Article article) {

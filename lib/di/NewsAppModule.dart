@@ -8,8 +8,10 @@ import 'package:news_app/data/network/services/DatabaseService.dart';
 import 'package:news_app/data/network/services/DatabaseServiceImpl.dart';
 import 'package:news_app/data/repository/ArticlesRepository.dart';
 import 'package:news_app/data/repository/ArticlesRepositoryImpl.dart';
-import 'package:news_app/domain/interactors/ArticlesListInteractor.dart';
-import 'package:news_app/domain/interactors/ArticlesListInteractorImpl.dart';
+import 'package:news_app/domain/interactors/articles/ArticlesListInteractor.dart';
+import 'package:news_app/domain/interactors/articles/ArticlesListInteractorImpl.dart';
+import 'package:news_app/domain/interactors/bookmarks/BookmarksListInteractor.dart';
+import 'package:news_app/domain/interactors/bookmarks/BookmarksListInteractorImpl.dart';
 
 class NewsAppModule {
   static final NewsAppModule _newsAppModule = NewsAppModule._internal();
@@ -29,6 +31,7 @@ class NewsAppModule {
 
   // Domain.
   ArticlesListInteractor _articlesListInteractor;
+  BookmarksListInteractor _bookmarksListInteractor;
 
   // Single.
   ApiEntityMapper _getApiEntityMapper() {
@@ -74,5 +77,12 @@ class NewsAppModule {
       _articlesListInteractor = ArticlesListInteractorImpl(_getArticlesRepository());
     }
     return _articlesListInteractor;
+  }
+
+  BookmarksListInteractor getBookmarksListInteractor() {
+    if (_bookmarksListInteractor == null) {
+      _bookmarksListInteractor = BookmarksListInteractorImpl(_getArticlesRepository());
+    }
+    return _bookmarksListInteractor;
   }
 }

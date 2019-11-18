@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:news_app/presentation/detail/ArticleDetailScreen.dart';
-import 'package:news_app/presentation/main/MainScreen.dart';
+import 'package:news_app/presentation/screens/detail/ArticleDetailScreen.dart';
+import 'package:news_app/presentation/screens/main/MainScreen.dart';
 
 import 'AppLocalizations.dart';
 

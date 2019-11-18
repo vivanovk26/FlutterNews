@@ -4,24 +4,24 @@ import 'package:news_app/domain/dto/Article.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseServiceImpl extends DatabaseService {
+class DatabaseServiceImpl implements DatabaseService {
   static const String _ARTICLES_TABLE = "articles";
   static const String _DATABASE_FILE = "articles.db";
   static const int _DATABASE_VERSION = 1;
 
-  Database get _database => _requireDatabase();
   Database _cachedDatabase;
   final DatabaseEntityMapper _databaseEntityMapper;
 
   DatabaseServiceImpl(this._databaseEntityMapper);
 
-  Database _requireDatabase() {
+  Future<Database> _requireDatabase() {
     if (_cachedDatabase == null) {
-      _initDatabase()
+      return _initDatabase()
           .then((database) => _cachedDatabase = database)
           .catchError((error) => print("Error while openning database: $error"));
+    } else {
+      return Future.value(_cachedDatabase);
     }
-    return _cachedDatabase;
   }
 
   Future<Database> _initDatabase() async {
@@ -37,26 +37,53 @@ class DatabaseServiceImpl extends DatabaseService {
   }
 
   @override
-  Future<void> insertArticle(Article article) async {
-    await _database.insert(
-      _ARTICLES_TABLE,
-      _databaseEntityMapper.mapArticleToEntity(article),
-      conflictAlgorithm: ConflictAlgorithm.replace,
+  Future<List<String>> getArticleIds() {
+    return _requireDatabase().then((database) {
+      return database.query(
+        _ARTICLES_TABLE,
+        columns: ["id"],
+      ).then((entities) {
+        return List.generate(entities.length, (i) {
+          return entities[i]["id"];
+        });
+      });
+    });
+  }
+
+  @override
+  Future<List<Article>> getArticles() {
+    return _requireDatabase().then((database) {
+      return database.query(_ARTICLES_TABLE).then((entities) {
+        return List.generate(entities.length, (i) {
+          return _databaseEntityMapper.mapEntityToArticle(entities[i]);
+        });
+      });
+    });
+  }
+
+  @override
+  Future<int> insertArticle(Article article) {
+    return _requireDatabase().then(
+          (database) {
+        return database.insert(
+          _ARTICLES_TABLE,
+          _databaseEntityMapper.mapArticleToEntity(article),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      },
     );
   }
 
   @override
-  Future<List<Article>> getArticles() async {
-    final List<Map<String, dynamic>> entities = await _database.query(_ARTICLES_TABLE);
-    return entities.map((entity) => _databaseEntityMapper.mapEntityToArticle(entity));
-  }
-
-  @override
-  Future<void> deleteArticle(String articleId) async {
-    await _database.delete(
-      _ARTICLES_TABLE,
-      where: "id = ?",
-      whereArgs: [articleId],
+  Future<int> deleteArticle(String articleId) {
+    return _requireDatabase().then(
+          (database) {
+        return database.delete(
+          _ARTICLES_TABLE,
+          where: "id = ?",
+          whereArgs: [articleId],
+        );
+      },
     );
   }
 }
