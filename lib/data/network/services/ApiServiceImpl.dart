@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:news_app/data/mappers/ApiEntityMapper.dart';
 import 'package:news_app/data/network/dto/responses/ArticlesResponse.dart';
+import 'package:news_app/data/network/mappers/ApiEntityMapper.dart';
 import 'package:news_app/data/network/services/ApiService.dart';
 import 'package:news_app/domain/dto/Article.dart';
 

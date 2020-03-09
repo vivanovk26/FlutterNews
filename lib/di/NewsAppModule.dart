@@ -1,11 +1,11 @@
-import 'package:news_app/data/mappers/ApiEntityMapper.dart';
-import 'package:news_app/data/mappers/ApiEntityMapperImpl.dart';
-import 'package:news_app/data/mappers/DatabaseEntityMapper.dart';
-import 'package:news_app/data/mappers/DatabaseEntityMapperImpl.dart';
+import 'package:news_app/data/database/mappers/DatabaseEntityMapper.dart';
+import 'package:news_app/data/database/mappers/DatabaseEntityMapperImpl.dart';
+import 'package:news_app/data/database/services/DatabaseService.dart';
+import 'package:news_app/data/database/services/DatabaseServiceImpl.dart';
+import 'package:news_app/data/network/mappers/ApiEntityMapper.dart';
+import 'package:news_app/data/network/mappers/ApiEntityMapperImpl.dart';
 import 'package:news_app/data/network/services/ApiService.dart';
 import 'package:news_app/data/network/services/ApiServiceImpl.dart';
-import 'package:news_app/data/network/services/DatabaseService.dart';
-import 'package:news_app/data/network/services/DatabaseServiceImpl.dart';
 import 'package:news_app/data/repository/ArticlesRepository.dart';
 import 'package:news_app/data/repository/ArticlesRepositoryImpl.dart';
 import 'package:news_app/domain/interactors/articles/ArticlesListInteractor.dart';

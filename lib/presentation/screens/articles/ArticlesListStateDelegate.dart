@@ -19,6 +19,7 @@ class ArticlesListStateDelegate extends ListStateDelegate<Article> {
         oldItem.title,
         oldItem.description,
         oldItem.urlToImage,
+        oldItem.date,
         action.inDatabase,
       );
       items[index] = newItem;

@@ -1,13 +1,22 @@
-import 'package:news_app/data/mappers/DatabaseEntityMapper.dart';
-import 'package:news_app/data/network/services/DatabaseService.dart';
+import 'package:news_app/data/database/mappers/DatabaseEntityMapper.dart';
+import 'package:news_app/data/database/services/DatabaseService.dart';
 import 'package:news_app/domain/dto/Article.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseServiceImpl implements DatabaseService {
+  // Core
   static const String _ARTICLES_TABLE = "articles";
   static const String _DATABASE_FILE = "articles.db";
   static const int _DATABASE_VERSION = 1;
+
+  // Fields
+  // Article (it's better to use different field names in case we use embedded instances later).
+  static const String _ARTICLE_ID = "article_id";
+  static const String _ARTICLE_DATE = "article_date";
+  static const String _ARTICLE_DESCRIPTION = "article_description";
+  static const String _ARTICLE_TITLE = "article_title";
+  static const String _ARTICLE_URL_TO_IMAGE = "article_url_to_image";
 
   Database _cachedDatabase;
   final DatabaseEntityMapper _databaseEntityMapper;
@@ -29,7 +38,13 @@ class DatabaseServiceImpl implements DatabaseService {
       join(await getDatabasesPath(), _DATABASE_FILE),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE articles(id TEXT PRIMARY KEY, title TEXT, description TEXT, urlToImage TEXT)",
+          "CREATE TABLE articles("
+              "$_ARTICLE_ID TEXT PRIMARY KEY, "
+              "$_ARTICLE_TITLE TEXT, "
+              "$_ARTICLE_DESCRIPTION TEXT, "
+              "$_ARTICLE_URL_TO_IMAGE TEXT, "
+              "$_ARTICLE_DATE INTEGER"
+              ")",
         );
       },
       version: _DATABASE_VERSION,
@@ -41,10 +56,10 @@ class DatabaseServiceImpl implements DatabaseService {
     return _requireDatabase().then((database) {
       return database.query(
         _ARTICLES_TABLE,
-        columns: ["id"],
+        columns: [_ARTICLE_ID],
       ).then((entities) {
         return List.generate(entities.length, (i) {
-          return entities[i]["id"];
+          return entities[i][_ARTICLE_ID];
         });
       });
     });
@@ -80,7 +95,7 @@ class DatabaseServiceImpl implements DatabaseService {
           (database) {
         return database.delete(
           _ARTICLES_TABLE,
-          where: "id = ?",
+          where: "$_ARTICLE_ID = ?",
           whereArgs: [articleId],
         );
       },

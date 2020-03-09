@@ -1,9 +1,10 @@
-import 'package:news_app/data/mappers/DatabaseEntityMapper.dart';
+import 'package:news_app/data/database/mappers/DatabaseEntityMapper.dart';
 import 'package:news_app/domain/dto/Article.dart';
 
 class DatabaseEntityMapperImpl extends DatabaseEntityMapper {
   // Article
   static const String _ARTICLE_ID = "id";
+  static const String _ARTICLE_DATE = "date";
   static const String _ARTICLE_DESCRIPTION = "description";
   static const String _ARTICLE_TITLE = "title";
   static const String _ARTICLE_URL_TO_IMAGE = "urlToImage";
@@ -15,6 +16,7 @@ class DatabaseEntityMapperImpl extends DatabaseEntityMapper {
       _ARTICLE_TITLE: article.title,
       _ARTICLE_DESCRIPTION: article.description,
       _ARTICLE_URL_TO_IMAGE: article.urlToImage,
+      _ARTICLE_DATE: article.date.millisecondsSinceEpoch,
     };
   }
 
@@ -25,6 +27,7 @@ class DatabaseEntityMapperImpl extends DatabaseEntityMapper {
       map[_ARTICLE_TITLE],
       map[_ARTICLE_DESCRIPTION],
       map[_ARTICLE_URL_TO_IMAGE],
+      DateTime.fromMillisecondsSinceEpoch(map[_ARTICLE_DATE]),
       true,
     );
   }

@@ -5,10 +5,11 @@ class Article extends Equatable {
   final String title;
   final String description;
   final String urlToImage;
+  final DateTime date;
   final bool inDatabase;
 
-  Article(this.id, this.title, this.description, this.urlToImage, this.inDatabase);
+  Article(this.id, this.title, this.description, this.urlToImage, this.date, this.inDatabase);
 
   @override
-  List<Object> get props => [title, description, urlToImage, inDatabase];
+  List<Object> get props => [title, description, urlToImage, this.date, inDatabase];
 }

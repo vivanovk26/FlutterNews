@@ -35,9 +35,7 @@ class ArticlesListState extends State<ArticlesListScreen> {
   void initState() {
     super.initState();
 
-    if (_listData.items.isEmpty) {
-      _reduce(_articlesListInteractor.loadInitial());
-    }
+    _reduce(_articlesListInteractor.loadInitial());
   }
 
   void _reduce(Stream<DomainAction> actions) async {

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:news_app/domain/dto/Article.dart';
 import 'package:news_app/presentation/screens/detail/ArticleDetailScreen.dart';
 
@@ -17,6 +18,8 @@ class NewsItemWidget extends StatelessWidget {
   static const int _TITLE_MAX_LINES = 2;
   static const double _DESCRIPTION_FONT_SIZE = 14.0;
   static const int _DESCRIPTION_MAX_LINES = 3;
+  static const double _DATE_FONT_SIZE = 8.0;
+  static const int _DATE_MAX_LINES = 1;
 
   // Styles
   static const Color _TEXT_COLOR = Colors.black;
@@ -28,6 +31,14 @@ class NewsItemWidget extends StatelessWidget {
     color: _TEXT_COLOR,
     fontSize: _DESCRIPTION_FONT_SIZE,
   );
+  static const TextStyle _DATE_STYLE = TextStyle(
+    color: _TEXT_COLOR,
+    fontSize: _DATE_FONT_SIZE,
+  );
+
+  // Date format
+  static const String _DATE_FORMAT = "DD MMM H:m";
+  static const DateFormat _DATE_FORMAT = DateFormat(_DATE_FORMAT);
 
   final Article _article;
   final void Function(Article article) _onBookmarkClick;
@@ -92,6 +103,17 @@ class NewsItemWidget extends StatelessWidget {
                               style: _DESCRIPTION_STYLE,
                               maxLines: _DESCRIPTION_MAX_LINES,
                               overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Hero(
+                          tag: _article.date.toIso8601String(),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Text(
+                              _article.,
+                              style: _DATE_STYLE,
+                              maxLines: _DATE_MAX_LINES,
                             ),
                           ),
                         )

@@ -1,10 +1,11 @@
 import 'dart:collection';
 
 import 'package:news_app/data/error/ParseException.dart';
-import 'package:news_app/data/mappers/ApiEntityMapper.dart';
 import 'package:news_app/data/network/dto/entities/ArticleEntity.dart';
 import 'package:news_app/data/network/dto/responses/ArticlesResponse.dart';
 import 'package:news_app/domain/dto/Article.dart';
+
+import 'ApiEntityMapper.dart';
 
 class ApiEntityMapperImpl implements ApiEntityMapper {
   @override
@@ -27,7 +28,7 @@ class ApiEntityMapperImpl implements ApiEntityMapper {
 
   Article _mapEntityToArticle(ArticleEntity articleEntity, Set<String> bookmarkIds) {
     if (_validArticle(articleEntity)) {
-      final String title = _parseOptionalString(articleEntity.title);
+      final String title = _parseRequiredString(articleEntity.title);
       final String description = _parseOptionalString(articleEntity.description);
       final id = title + description;
       return Article(
@@ -37,8 +38,8 @@ class ApiEntityMapperImpl implements ApiEntityMapper {
           _parseRequiredString(
             articleEntity.urlToImage,
           ),
-          bookmarkIds.contains(id)
-      );
+          _parseRequiredDate(articleEntity.publishedAt),
+          bookmarkIds.contains(id));
     } else {
       throw ParseException("Error while parsing $articleEntity");
     }
@@ -50,5 +51,9 @@ class ApiEntityMapperImpl implements ApiEntityMapper {
 
   String _parseRequiredString(String value) {
     return (value != null && value.isNotEmpty) ? value : throw ParseException("Error while parsing $value");
+  }
+
+  DateTime _parseRequiredDate(String value) {
+    return value != null ? DateTime.parse(value) : throw ParseException("Error while parsing $value");
   }
 }

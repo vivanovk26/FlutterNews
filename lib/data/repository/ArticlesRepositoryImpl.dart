@@ -1,5 +1,5 @@
+import 'package:news_app/data/database/services/DatabaseService.dart';
 import 'package:news_app/data/network/services/ApiService.dart';
-import 'package:news_app/data/network/services/DatabaseService.dart';
 import 'package:news_app/data/repository/ArticlesRepository.dart';
 import 'package:news_app/domain/dto/Article.dart';
 
